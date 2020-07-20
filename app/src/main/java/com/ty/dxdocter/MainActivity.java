@@ -1,15 +1,18 @@
 package com.ty.dxdocter;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.ty.dxdocter.arouter.MianRouter;
 import com.ty.dxdocter.base.BaseActivity;
 
@@ -20,11 +23,16 @@ public class MainActivity extends BaseActivity {
     private FragmentManager mFragmentManager;
     private BottomNavigationView mBottomNavigationView;
     private List<Fragment> fragmentList = new ArrayList<>();
-
+    private ConstraintLayout mainLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         setContentView(R.layout.activity_main);
+        mainLayout = findViewById(R.id.main_layout);
+        getWindow().setNavigationBarColor(Color.WHITE);
+        mainLayout.setPadding(0,QMUIStatusBarHelper.getStatusbarHeight(this),0,0);
         initView();
     }
 

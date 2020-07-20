@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+
 
 public class MainActivity extends AppCompatActivity {
 

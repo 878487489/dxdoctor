@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 public class DoctorMainActivity extends AppCompatActivity {
 
     private FragmentManager mFragmentManager;
