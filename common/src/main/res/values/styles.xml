@@ -1,0 +1,15 @@
+<resources>
+    <!--修改searchView字体颜色、大小-->
+    <style name="AppAutoCompleteTextView" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textColor">@color/bar_hit_text</item>
+        <item name="android:textAppearance">@style/AutoCompleteTextAppearance</item>
+    </style>
+
+    <style name="AutoCompleteTextAppearance" parent="android:TextAppearance">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/bar_hit_text</item>
+        <item name="android:textColorHighlight">@color/bar_hit_text</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

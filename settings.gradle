@@ -1,0 +1,6 @@
+include ':seedoctor'
+include ':mine'
+include ':home'
+include ':common'
+include ':app'
+rootProject.name = "dxdocter"
