@@ -3,65 +3,111 @@ package com.ty.seedoctor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
+import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+import com.ty.seedoctor.adapter.AnserAdapter;
+import com.ty.seedoctor.adapter.DepartmentAdapter;
+import com.ty.seedoctor.bean.AnswerItme;
+import com.ty.seedoctor.bean.Department;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link SeeDoctorFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author 檀煜
  */
 @Route(path = "/doctor/fragment")
-public class SeeDoctorFragment extends Fragment {
+public class SeeDoctorFragment extends Fragment implements DoctorContract.DoctorView {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private View docView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private QMUIGroupListView doctorGruopListview;
+    private QMUIGroupListView answerGroup;
+    private GridView deptPartGride;
+    private DoctorPresenter doctorPresenter;
+    private static String TAG = "DoctorFragment";
 
-    public SeeDoctorFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SeeDoctorFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SeeDoctorFragment newInstance(String param1, String param2) {
-        SeeDoctorFragment fragment = new SeeDoctorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    private RecyclerView answerRecycleview;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the titlebar_layout for this fragment
-        return inflater.inflate(R.layout.fragment_seedoctor, container, false);
+        View view = inflater.inflate(R.layout.fragment_seedoctor, container, false);
+        this.docView = view;
+        initView();
+        return view;
+    }
+
+    public void initView(){
+        doctorGruopListview = docView.findViewById(R.id.doc_group);
+        deptPartGride = docView.findViewById(R.id.department_gridview);
+        answerRecycleview = docView.findViewById(R.id.answer_recycleview);
+        answerGroup = docView.findViewById(R.id.answer_group);
+        doctorPresenter = new DoctorPresenter(this);
+        doctorPresenter.initView(getActivity(),TAG);
+        initMore();
+        initMenuDepartMent();
+    }
+
+    public void initMore(){
+        QMUICommonListItemView itemWithChevron = doctorGruopListview.createItemView(getString(R.string.departments));
+        itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        itemWithChevron.setDetailText(getString(R.string.more));
+        doctorGruopListview.addView(itemWithChevron);
+
+        QMUICommonListItemView itemWithCustom = answerGroup.createItemView("最新问答");
+        itemWithCustom.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageResource(R.drawable.ic_baseline_cached_24);
+        itemWithCustom.addAccessoryCustomView(imageView);
+        itemWithCustom.setDetailText("换一批");
+        answerGroup.addView(itemWithCustom);
+    }
+
+    private void initMenuDepartMent(){
+        List<Department> departmentList = new ArrayList<>();
+        departmentList.add(new Department(R.drawable.menu1,"皮肤性病科"));
+        departmentList.add(new Department(R.drawable.menu2,"儿科"));
+        departmentList.add(new Department(R.drawable.menu3,"妇产科"));
+        departmentList.add(new Department(R.drawable.menu4,"泌尿外科"));
+        departmentList.add(new Department(R.drawable.menu5,"骨科"));
+        departmentList.add(new Department(R.drawable.menu6,"内分泌科"));
+        departmentList.add(new Department(R.drawable.menu7,"心血管内科"));
+        departmentList.add(new Department(R.drawable.menu8,"神经科"));
+
+        DepartmentAdapter adapter = new DepartmentAdapter(departmentList);
+        deptPartGride.setAdapter(adapter);
+    }
+
+    @Override
+    public void newsAnserSuccess(List<AnswerItme> answerItmeList) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        answerRecycleview.setLayoutManager(linearLayoutManager);
+        answerRecycleview.addItemDecoration(new DividerItemDecoration(getContext(),1));
+        AnserAdapter anserAdapter = new AnserAdapter(answerItmeList);
+        answerRecycleview.setAdapter(anserAdapter);
     }
 }

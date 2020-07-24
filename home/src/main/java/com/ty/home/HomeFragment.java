@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
     private RecyclerView mRecyclerView;
     private QMUIGroupListView moreForm;
 
-    //底部切换
+    //底部内容切换
     private QMUITabSegment mTabSegment;
     private ViewPager mViewPager;
     List<View> recyclerViewList = new ArrayList<>();
@@ -82,9 +82,9 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
         AD2.setCornerRadius(QMUIDisplayHelper.dp2px(getContext(), 5));
         AD2.setBorderWidth(QMUIDisplayHelper.dp2px(getContext(), 0));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),1));
-        QMUICommonListItemView itemWithChevron = moreForm.createItemView("医师讲堂");
+        QMUICommonListItemView itemWithChevron = moreForm.createItemView(getString(R.string.home_item_formname));
         itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        itemWithChevron.setDetailText("更多");
+        itemWithChevron.setDetailText(getString(R.string.more));
         moreForm.addView(itemWithChevron);
         // 设置布局
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()){
@@ -112,36 +112,16 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
         //初始化tab
         QMUITabBuilder builder = mTabSegment.tabBuilder();
         builder.setSelectColor(Color.parseColor("#00baad"));
-        mTabSegment.addTab(builder.setText("饮食健康").build(getContext()));
-        mTabSegment.addTab(builder.setText("两性健康").build(getContext()));
-        mTabSegment.addTab(builder.setText("孕产育儿").build(getContext()));
-        mTabSegment.addTab(builder.setText("常见疾病").build(getContext()));
+        mTabSegment.addTab(builder.setText(getString(R.string.home_tab1)).build(getContext()));
+        mTabSegment.addTab(builder.setText(getString(R.string.home_tab2)).build(getContext()));
+        mTabSegment.addTab(builder.setText(getString(R.string.home_tab3)).build(getContext()));
+        mTabSegment.addTab(builder.setText(getString(R.string.home_tab4)).build(getContext()));
         mTabSegment.setupWithViewPager(mViewPager,false);
         mTabSegment.setMode(QMUITabSegment.MODE_FIXED);
 
         mTabSegment.setIndicator(new QMUITabIndicator(
                 QMUIDisplayHelper.dp2px(getContext(), 2), false, true));
-        mTabSegment.addOnTabSelectedListener(new QMUIBasicTabSegment.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int index) {
-
-            }
-
-            @Override
-            public void onTabUnselected(int index) {
-
-            }
-
-            @Override
-            public void onTabReselected(int index) {
-
-            }
-
-            @Override
-            public void onDoubleTap(int index) {
-                mTabSegment.clearSignCountView(index);
-            }
-        });
+        mTabSegment.addOnTabSelectedListener(tabSelectedListener);
         mViewPager.setAdapter(mPagerAdapter);
     }
 
@@ -157,7 +137,7 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
         TabContentAdapter adapter = new TabContentAdapter(healListBeanList);
         contentRecycleView.setAdapter(adapter);
     }
-
+    //viewpager  适配器
     private PagerAdapter mPagerAdapter = new PagerAdapter() {
         @Override
         public boolean isViewFromObject(View view, Object object) {
@@ -182,6 +162,29 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
         }
 
     };
+    //tab 切换监听接口
+     private QMUIBasicTabSegment.OnTabSelectedListener tabSelectedListener= new QMUIBasicTabSegment.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(int index) {
+
+        }
+
+        @Override
+        public void onTabUnselected(int index) {
+
+        }
+
+        @Override
+        public void onTabReselected(int index) {
+
+        }
+
+        @Override
+        public void onDoubleTap(int index) {
+            mTabSegment.clearSignCountView(index);
+        }
+    };
+
 
 
 }

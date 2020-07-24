@@ -1,4 +1,6 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="see_doctor">doctor fragment</string>
+    <string name="departments">热门科室</string>
+    <string name="more">更多</string>
 </resources>
