@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ty.find">
+
+    <application>
+        <activity android:name=".view.QuickQuestionActivity"></activity>
+        <activity android:name=".view.IllnessBankActivity" />
+        <activity android:name=".view.FindDrugsActivity" />
+        <activity android:name=".view.FindDoctorActivity" />
+    </application>
+
+</manifest>

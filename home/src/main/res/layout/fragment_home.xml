@@ -41,6 +41,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/item1"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_weight="1"
@@ -58,12 +59,13 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="找医生"
+                        android:text="@string/item1"
                         android:textSize="14sp" />
                 </LinearLayout>
 
 
                 <LinearLayout
+                    android:id="@+id/item2"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_weight="1"
@@ -80,11 +82,12 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="找药品"
+                        android:text="@string/item2"
                         android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/item3"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_weight="1"
@@ -101,11 +104,12 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="查疾病"
+                        android:text="@string/item3"
                         android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/item4"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_weight="1"
@@ -122,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="医师讲堂"
+                        android:text="@string/item4"
                         android:textSize="14sp" />
                 </LinearLayout>
 

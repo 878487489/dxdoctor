@@ -8,4 +8,10 @@
     <string name="home_tab4">常见疾病</string>
     <string name="home_item_formname">医师讲堂</string>
     <string name="more">更多</string>
+
+    <string name="item1">找医生</string>
+    <string name="item2">找药品</string>
+    <string name="item3">查疾病</string>
+    <string name="item4">医师讲堂</string>
+    <string name="forum_list_title">医师讲堂</string>
 </resources>

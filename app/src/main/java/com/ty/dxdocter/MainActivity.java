@@ -25,14 +25,12 @@ public class MainActivity extends BaseActivity {
     private FragmentManager mFragmentManager;
     private BottomNavigationView mBottomNavigationView;
     private List<Fragment> fragmentList = new ArrayList<>();
-    private ConstraintLayout mainLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
         setContentView(R.layout.activity_main);
-
         initView();
     }
 
@@ -40,9 +38,7 @@ public class MainActivity extends BaseActivity {
     public void initView(){
         mBottomNavigationView = findViewById(R.id.nav_view);
         mFragmentManager = getSupportFragmentManager();
-        mainLayout = findViewById(R.id.main_layout);
         getWindow().setNavigationBarColor(Color.WHITE);
-        mainLayout.setPadding(0,QMUIStatusBarHelper.getStatusbarHeight(this),0,0);
         initFragment();
         mBottomNavigationView.setOnNavigationItemSelectedListener(NavigationItemSelectedListener);
         //设置默认选中item

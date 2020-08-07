@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
@@ -21,6 +23,7 @@ import com.qmuiteam.qmui.widget.tab.QMUIBasicTabSegment;
 import com.qmuiteam.qmui.widget.tab.QMUITabBuilder;
 import com.qmuiteam.qmui.widget.tab.QMUITabIndicator;
 import com.qmuiteam.qmui.widget.tab.QMUITabSegment;
+import com.ty.common.utils.RequestQueueUtil;
 import com.ty.home.adapter.FormAdapter;
 import com.ty.home.adapter.TabContentAdapter;
 import com.ty.home.bean.FormListBean;
@@ -55,6 +58,10 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
     List<View> recyclerViewList = new ArrayList<>();
     private RecyclerView contentRecycleView;
 
+    private LinearLayout item1;
+    private LinearLayout item2;
+    private LinearLayout item3;
+    private LinearLayout item4;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +84,11 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
         mViewPager = mView.findViewById(R.id.tab_viewpage);
         AD1 = mView.findViewById(R.id.ad_1);
         AD2 = mView.findViewById(R.id.ad_2);
+        item1 = mView.findViewById(R.id.item1);
+        item2 = mView.findViewById(R.id.item2);
+        item3 = mView.findViewById(R.id.item3);
+        item4 = mView.findViewById(R.id.item4);
+
         AD1.setCornerRadius(QMUIDisplayHelper.dp2px(getContext(), 5));
         AD1.setBorderWidth(QMUIDisplayHelper.dp2px(getContext(), 0));
         AD2.setCornerRadius(QMUIDisplayHelper.dp2px(getContext(), 5));
@@ -85,6 +97,12 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
         QMUICommonListItemView itemWithChevron = moreForm.createItemView(getString(R.string.home_item_formname));
         itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemWithChevron.setDetailText(getString(R.string.more));
+        itemWithChevron.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/more/ForumListActivity").navigation();
+            }
+        });
         moreForm.addView(itemWithChevron);
         // 设置布局
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()){
@@ -123,6 +141,40 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
                 QMUIDisplayHelper.dp2px(getContext(), 2), false, true));
         mTabSegment.addOnTabSelectedListener(tabSelectedListener);
         mViewPager.setAdapter(mPagerAdapter);
+
+        initClickListener();
+    }
+
+    //初始化item监听事件
+    private void initClickListener(){
+
+        item1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/find/FindDoctorActivity").navigation();
+            }
+        });
+
+        item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/find/FindDrugsActivity").navigation();
+            }
+        });
+
+        item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/find/IllnessBankActivity").navigation();
+            }
+        });
+
+        item4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/find/QuickQuestionActivity").navigation();
+            }
+        });
     }
 
     @Override
@@ -185,6 +237,12 @@ public class HomeFragment extends Fragment implements IHomeContract.HomeView {
         }
     };
 
-
-
+    /**
+     * 销毁fragment同时取消或终止所有请求，防止空指针异常
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RequestQueueUtil.getRequestQueue(getContext()).cancelAll(TAG);
+    }
 }

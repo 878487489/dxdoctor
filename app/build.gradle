@@ -41,5 +41,6 @@ dependencies {
         implementation project(':mine')
         implementation project(':seedoctor')
         implementation project(':search')
+        implementation project(':find')
     }
 }
